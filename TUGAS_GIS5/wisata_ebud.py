@@ -34,25 +34,32 @@ point_sym.height = mapnik.Expression("20")
 point_sym.allow_overlap = True
 r.symbols.append(point_sym)
 
-text_sym = mapnik.TextSymbolizer(mapnik.Expression('[NAME'), 'DejaVu Sans Bold',10,mapnik.Color('black'))
-text_sym.halo_radius = 1
-text_sym.allow_overlap = True
-text_sym.avoid_edges = False
-r.symbols.append(text_sym)
+label = mapnik.TextSymbolizer(mapnik.Expression('[Kota]'), 'DejaVu Sans Book',5,mapnik.Color('Red'))
+label.halo_radius = 1
+label.avoid_edges = False
+rsby_wisata.symbols.append(label) #membuat rule label
 
-s = mapnik.Style()
-r = mapnik.Rule()
+#Membuat Layer Tempat Wisata
+layer_wisata = mapnik.Layer('Wisata', '+init=epsg:4326')
+ds = mapnik.MemoryDatasource()
+layer_wisata.datasource = ds
+fitur_wisata = mapnik.Feature(mapnik.Context(),1)
+fitur_wisata['Kota'] = 'Taman Bungkul'
+fitur_wisata.add_geometries_from_wkt("POINT(-7.290902 112.739419)")
+ds.add_feature(fitur_wisata)
+#layer_wisata.srs = longlat.params()
 
-ds = mapnik.MemoryDataSource()
-f = mapnik.Feature(mapnik.Context(), 1)
-f['NAME'] = 'Taman Bungkul'
-f.add_geometries_from_wkt("POINT(-7.290902 112.739419)")
-ds.add_feature(f)
+#Menerapkan rule-rule yang ada ke style yang telah dibuat
+ssby.rules.append(rsby)
+ssby_wisata.rules.append(rsby_wisata) 
 
-player = mapnik.Layer('airport_layer')
-player.datasource = ds
-player.styles.append('airport point')
-m.layers.append(player)
+#Menerapkan Style utama ke peta yang telah dibuat
+m.append_style('StyleLayerSby',ssby) #memberi nama Style
+m.append_style('PoinWisata', ssby_wisata) #memberinama style poinwisata
+layer_sby.styles.append('StyleLayerSby') #meletakkan style sby ke dalam layer_sby
+layer_wisata.styles.append('PoinWisata') #meletakkan style wisata ke dalam layer_wisata
+m.layers.append(layer_sby) #meletakkan layer Surabaya ke dalam peta
+m.layers.append(layer_wisata) #meletakkan layer wisata ke dalam peta
 
 m.zoom_all()
 mapnik.render_to_file(m,'wisata.pdf', 'pdf')
