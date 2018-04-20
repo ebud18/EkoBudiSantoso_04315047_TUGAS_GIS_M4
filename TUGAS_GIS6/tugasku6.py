@@ -6,13 +6,13 @@ m.background = mapnik.Color('steelblue')
 
 #---------------------Layer1-----------------------#
 layer1 = mapnik.Layer('Indonesia')
-layer1.datasource = mapnik.Shapefile(file="shp/INDONESIA_PROP.shp")
+layer1.datasource = mapnik.Shapefile(file="C:\Users\Ebud\Documents\Narotama-Dev\EkoBudiSantoso_04315047_TUGAS_GIS_M4\TUGAS_GIS6\SHP_Indonesia_provinsi/INDONESIA_PROP.shp")
 
 sty1 = mapnik.Style()
 rul1 = mapnik.Rule()
 
 polygon_symbolizer = mapnik.PolygonSymbolizer()
-polygon_symbolizer.fill = mapnik.Color('#fcff00')
+polygon_symbolizer.fill = mapnik.Color('green')
 
 rul1.symbols.append(polygon_symbolizer)
 sty1.rules.append(rul1)
@@ -22,7 +22,7 @@ m.append_style('Style1', sty1)
 
 #---------------------Layer1-----------------------#
 layer2 = mapnik.Layer('Surabaya')
-layer2.datasource = mapnik.Shapefile(file="shp/TNBTS.shp")
+layer2.datasource = mapnik.Shapefile(file="C:\Users\Ebud\Documents\Narotama-Dev\EkoBudiSantoso_04315047_TUGAS_GIS_M4\TUGAS_GIS6\sby/SURABAYA.shp")
 #db = dict(
 #	host = 'localhost',
 #	port=5432,
@@ -62,5 +62,5 @@ m.layers.append(layer1)
 m.layers.append(layer2)
 
 m.zoom_all()
-mapnik.render_to_file(m,'TNBTS.pdf', 'pdf')
-print "Sukses Bro"
+mapnik.render_to_file(m,'Ampunbos.pdf', 'pdf')
+print "Ampun Bos"
